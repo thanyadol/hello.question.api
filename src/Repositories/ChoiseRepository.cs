@@ -28,7 +28,7 @@ namespace hello.question.api.Repositories
 
         Task<IEnumerable<Choise>> CreateRangeAsync(IEnumerable<Choise> choises);
 
-        Task<IEnumerable<Choise>> ListFullChoiseAsync();
+        Task<IEnumerable<Choise>> ListChoiseAsync();
 
         //Task<Choise> DeleteAsync(Guid id);
     }
@@ -97,7 +97,7 @@ namespace hello.question.api.Repositories
             return entity;
         }
 
-        public async Task<IEnumerable<Choise>> ListFullChoiseAsync()
+        public async Task<IEnumerable<Choise>> ListChoiseAsync()
         {
             var entity = await (from p in _context.Choises
                                 join c in _context.SubChoises on p.Id equals c.ChoiseId

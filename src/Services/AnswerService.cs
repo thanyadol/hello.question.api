@@ -31,7 +31,7 @@ namespace hello.question.api.Services
 
         Task<IEnumerable<Answer>> ListAsync();
         Task<Answer> EnforceAnswerExistenceAsync(Guid id);
-        Task<IEnumerable<Answer>> ListBySessionAsync(Guid sessionid);
+        Task<IEnumerable<Answer>> ListByParticipantAsync(Guid participantid);
     }
 
     public class AnswerService : IAnswerService
@@ -48,6 +48,20 @@ namespace hello.question.api.Services
             Log.Logger = new LoggerConfiguration()
                             .WriteTo.Console()
                             .CreateLogger();
+        }
+
+        public async Task<Answer> BatchCreateAsync(AnswerParams answer)
+        {
+            //persist all of answer for earch subquestion
+
+
+            var entity = await _answerRepository.CreateAsync(answer);
+            if (entity == null)
+            {
+                throw new AnswerNotCreatedException();
+            }
+
+            return entity;
         }
 
         public async Task<Answer> CreateAsync(Answer answer)
@@ -74,11 +88,11 @@ namespace hello.question.api.Services
         }
 
 
-        public async Task<IEnumerable<Answer>> ListBySessionAsync(Guid sessionid)
+        public async Task<IEnumerable<Answer>> ListByParticipantAsync(Guid participantid)
         {
             var entities = await _answerRepository.ListAsync();
 
-            return entities.Where(c => c.SessionId == sessionid);
+            return entities.Where(c => c.participantid == participantid);
         }
 
 

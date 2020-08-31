@@ -32,7 +32,7 @@ namespace hello.question.api.Services
 
         Task<IEnumerable<Question>> ListAsync();
         Task<Question> EnforceQuestionExistenceAsync(Guid id);
-        Task<QuestionParams> GetRemainBySessionAsync(Guid sessionid);
+        Task<QuestionParams> GetRemainByParticipantAsync(Guid participantid)
     }
 
     public class QuestionService : IQuestionService
@@ -75,10 +75,10 @@ namespace hello.question.api.Services
         //      question model with list of mixed sub question and choise
         //
 
-        public async Task<QuestionParams> GetRemainBySessionAsync(Guid sessionid)
+        public async Task<QuestionParams> GetRemainByParticipantAsync(Guid participantid)
         {
             //get participant session
-            var participant = await _participantService.GetBySessionAsync(sessionid);
+            var participant = await _participantService.GetBySessionAsync(participantid);
             if (participant == null)
             {
                 throw new ParticipantNotFoundException();
@@ -87,10 +87,10 @@ namespace hello.question.api.Services
             //prepaire data
             var questions = await _questionRepository.ListAsync();
             var subQuestions = await _subQuestionRepository.ListAsync();
-            var choises = await _choiseService.ListFullChoiseAsync();
+            var choises = await _choiseService.ListChoiseAsync();
 
             //get list of answer to compare with remain
-            var recentAnswers = await _answerService.ListBySessionAsync(sessionid);
+            var recentAnswers = await _answerService.ListByParticipantAsync(participantid);
             if (recentAnswers.Any())
             {
 
