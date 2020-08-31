@@ -42,8 +42,12 @@ namespace hello.question.api
         public void ConfigureServices(IServiceCollection services)
         {
             //in memory
-            services.AddDbContext<NorthwindContext>(opt =>
-                                     opt.UseInMemoryDatabase("Northwind"));
+            //services.AddDbContext<NorthwindContext>(opt =>
+                                     //opt.UseInMemoryDatabase("Northwind"));
+
+            services.AddDbContext<NorthwindContext>(options =>
+            options.UseMySql(this._configuration.GetConnectionString("NorthwindConnection"),
+                     x => x.MigrationsHistoryTable("__EFMigrationsHistory", "dbo")));
 
             //add an APIs Service
             //services.AddHttpClient<IGoogleService, GoogleService>().SetHandlerLifetime(TimeSpan.FromMinutes(5));
