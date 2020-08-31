@@ -7,14 +7,21 @@ using System.Threading.Tasks;
 
 namespace hello.question.api.Models
 {
-    public class Question
+    public class SubQuestion
     {
         [Key]
         public Guid Id { get; set; }
 
+        [ForeignKey("Question")]
+        public Guid QuestionId { get; set; }
+
+
+        [ForeignKey("Choise")]
+        public Guid ChoiseId { get; set; }
+
 
         [StringLength(500)]
-        public string Title { get; set; }
+        public string Questionnair { get; set; }
 
         [StringLength(1000)]
         public string Description { get; set; }
@@ -24,6 +31,8 @@ namespace hello.question.api.Models
         public string Status { get; set; }
         public int Order { get; set; }
 
+        [StringLength(10)]
+        public string Type { get; set; }
 
         [StringLength(50)]
         public string By { get; set; }

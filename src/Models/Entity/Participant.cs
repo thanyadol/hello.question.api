@@ -7,23 +7,21 @@ using System.Threading.Tasks;
 
 namespace hello.question.api.Models
 {
-    public class Question
+    public class Participant
     {
         [Key]
         public Guid Id { get; set; }
 
 
         [StringLength(500)]
-        public string Title { get; set; }
+        public string Name { get; set; }
 
-        [StringLength(1000)]
-        public string Description { get; set; }
+        [StringLength(500)]
+        public string Email { get; set; }
 
 
         [StringLength(20)]
         public string Status { get; set; }
-        public int Order { get; set; }
-
 
         [StringLength(50)]
         public string By { get; set; }

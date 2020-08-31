@@ -18,6 +18,7 @@ using hello.question.api.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 using AutoMapper;
+using hello.question.api.Repositories;
 
 namespace hello.question.api
 {
@@ -51,6 +52,15 @@ namespace hello.question.api
             //Set 5 min as the lifetime for the HttpMessageHandler objects in the pool used for the Catalog Typed Client 
             //services.AddHttpClient<IClientService, ClientService>()
             //.SetHandlerLifetime(TimeSpan.FromMinutes(5));
+
+            //register DI
+            services.AddScoped<IAnswerRepository, AnswerRepository>();
+            services.AddScoped<IChoiseRepository, ChoiseRepository>();
+            services.AddScoped<ISubChoiseRepository, SubChoiseRepository>();
+            services.AddScoped<IParticipantRepository, ParticipantRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<ISubQuestionRepository, SubQuestionRepository>();
+
 
             // services.AddScoped<NorthwindContext>();
             services.AddApiVersioning();

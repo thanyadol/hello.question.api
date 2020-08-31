@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace hello.question.api.Models
 {
-    public class Question
+    public class SubChoise
     {
         [Key]
         public Guid Id { get; set; }
+
+        [ForeignKey("Choise")]
+        public Guid ChoiseId { get; set; }
 
 
         [StringLength(500)]
@@ -20,17 +23,8 @@ namespace hello.question.api.Models
         public string Description { get; set; }
 
 
-        [StringLength(20)]
-        public string Status { get; set; }
         public int Order { get; set; }
-
-
-        [StringLength(50)]
-        public string By { get; set; }
-
-
-        [Column(TypeName = "datetime")]
-        public Nullable<DateTime> Date { get; set; }
+        public bool AllowSelect { get; set; }
 
 
     }
