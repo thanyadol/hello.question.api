@@ -76,7 +76,7 @@ namespace hello.question.api.Services
 
         public async Task<IEnumerable<Answer>> ListBySessionAsync(Guid sessionid)
         {
-            var entities = await _answerRepository.ListQuestionAsync();
+            var entities = await _answerRepository.ListAsync();
 
             return entities.Where(c => c.SessionId == sessionid);
         }

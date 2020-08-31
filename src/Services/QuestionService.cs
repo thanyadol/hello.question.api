@@ -32,7 +32,7 @@ namespace hello.question.api.Services
 
         Task<IEnumerable<Question>> ListAsync();
         Task<Question> EnforceQuestionExistenceAsync(Guid id);
-        Task<QuestionParams> GetRemainBySessionAsync(Guid sessionid)
+        Task<QuestionParams> GetRemainBySessionAsync(Guid sessionid);
     }
 
     public class QuestionService : IQuestionService
