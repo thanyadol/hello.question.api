@@ -11,6 +11,7 @@ namespace hello.question.api.Models
     {
         [Key]
         public Guid Id { get; set; }
+        public Guid SessionId { get; set; }
 
 
         [StringLength(500)]

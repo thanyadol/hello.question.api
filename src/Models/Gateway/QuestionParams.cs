@@ -5,35 +5,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace hello.question.api.Models
+namespace hello.question.api.Models.Gateway
 {
-    public class Choise
+    public class QuestionParams
     {
-        [Key]
         public Guid Id { get; set; }
 
-        [StringLength(1000)]
-        public string Name { get; set; }
 
+        public string Title { get; set; }
 
-        [StringLength(1000)]
         public string Description { get; set; }
 
-
-        [StringLength(20)]
         public string Status { get; set; }
+        public int Order { get; set; }
 
-        [StringLength(50)]
+
         public string By { get; set; }
 
-
-        [Column(TypeName = "datetime")]
         public Nullable<DateTime> Date { get; set; }
 
-
-        [NotMapped]
-        public IEnumerable<SubChoise> SubChoises { get; set; }
-
+        public List<SubQuestion> SubQuestions { get; set; }
 
 
     }

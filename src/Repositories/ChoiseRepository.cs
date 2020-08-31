@@ -28,6 +28,8 @@ namespace hello.question.api.Repositories
 
         Task<IEnumerable<Choise>> CreateRangeAsync(IEnumerable<Choise> choises);
 
+        Task<IEnumerable<Choise>> ListFullChoiseAsync();
+
         //Task<Choise> DeleteAsync(Guid id);
     }
 
@@ -92,6 +94,27 @@ namespace hello.question.api.Repositories
         public async Task<Choise> GetAsync(Guid id)
         {
             var entity = await _context.Choises.FindAsync(id);
+            return entity;
+        }
+
+        public async Task<IEnumerable<Choise>> ListFullChoiseAsync()
+        {
+            var entity = await (from p in _context.Choises
+                                join c in _context.SubChoises on p.Id equals c.ChoiseId
+                                into t
+                                select new Choise()
+                                {
+                                    Id = p.Id,
+
+                                    Name = p.Name,
+
+                                    SubChoises = t,
+
+                                    By = p.By,
+                                    Date = p.Date
+
+                                }).ToListAsync();
+
             return entity;
         }
 

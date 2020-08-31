@@ -41,6 +41,10 @@ namespace hello.question.api.Models
         [Column(TypeName = "datetime")]
         public Nullable<DateTime> Date { get; set; }
 
+        [NotMapped]
+        public List<Choise> Choises { get; set; }
+
+
 
     }
 }

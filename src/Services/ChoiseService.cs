@@ -31,6 +31,7 @@ namespace hello.question.api.Services
 
         Task<IEnumerable<Choise>> ListAsync();
         Task<Choise> EnforceChoiseExistenceAsync(Guid id);
+        Task<IEnumerable<Choise>> ListFullChoiseAsync();
     }
 
     public class ChoiseService : IChoiseService
@@ -71,6 +72,13 @@ namespace hello.question.api.Services
         {
             return await _choiseRepository.ListAsync();
         }
+
+
+        public async Task<IEnumerable<Choise>> ListFullChoiseAsync()
+        {
+            return await _choiseRepository.ListFullChoiseAsync();
+        }
+
 
 
         public async Task<Choise> EnforceChoiseExistenceAsync(Guid id)

@@ -95,6 +95,5 @@ namespace hello.question.api.Repositories
             return entity;
         }
 
-
     }
 }

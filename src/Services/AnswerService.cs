@@ -31,6 +31,7 @@ namespace hello.question.api.Services
 
         Task<IEnumerable<Answer>> ListAsync();
         Task<Answer> EnforceAnswerExistenceAsync(Guid id);
+        Task<IEnumerable<Answer>> ListBySessionAsync(Guid sessionid);
     }
 
     public class AnswerService : IAnswerService
@@ -70,6 +71,14 @@ namespace hello.question.api.Services
         public async Task<IEnumerable<Answer>> ListAsync()
         {
             return await _answerRepository.ListAsync();
+        }
+
+
+        public async Task<IEnumerable<Answer>> ListBySessionAsync(Guid sessionid)
+        {
+            var entities = await _answerRepository.ListQuestionAsync();
+
+            return entities.Where(c => c.SessionId == sessionid);
         }
 
 
