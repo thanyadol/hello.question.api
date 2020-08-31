@@ -47,21 +47,31 @@ namespace hello.question.api.Services
             //logg
             Log.Logger = new LoggerConfiguration()
                             .WriteTo.Console()
-                            .CreateLogger();
+                            .CreateLogger();s
         }
 
-        public async Task<Answer> BatchCreateAsync(AnswerParams answer)
+        public async Task<IEnumerable<Answer>> BatchCreateAsync(AnswerParams param)
         {
+            List<Answer> entities = new List<Answer>();
             //persist all of answer for earch subquestion
+            foreach (var a in param.Answer)
+            {
+                //set some value
+                a.Date = DateTime.UtcNow;
+                a.ParticipantId = param.ParticipantId;
 
+                a.By = param.ParticipantId;
+                
+                entities.Add(a);
+            }
 
-            var entity = await _answerRepository.CreateAsync(answer);
+            var entity = await _answerRepository.CreateRangeAsync(entities);
             if (entity == null)
             {
                 throw new AnswerNotCreatedException();
             }
 
-            return entity;
+            return entities;
         }
 
         public async Task<Answer> CreateAsync(Answer answer)

@@ -39,9 +39,9 @@ namespace hello.question.api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<QuestionParams>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(IEnumerable<QuestionParams>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetRemainBySessionAsync(Guid sessionid)
+        public async Task<IActionResult> GetRemainByParticipantAsync(Guid participantid)
         {
-            var entities = await _questionService.GetRemainBySessionAsync(sessionid);
+            var entities = await _questionService.GetRemainByParticipantAsync(participantid);
             return Ok(entities);
         }
 
