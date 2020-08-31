@@ -78,7 +78,7 @@ namespace hello.question.api.Services
         public async Task<QuestionParams> GetRemainByParticipantAsync(Guid participantid)
         {
             //get participant session
-            var participant = await _participantService.GetBySessionAsync(participantid);
+            var participant = await _participantService.GetAsync(participantid);
             if (participant == null)
             {
                 throw new ParticipantNotFoundException();

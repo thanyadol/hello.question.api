@@ -21,6 +21,7 @@ using AutoMapper;
 using hello.question.api.Repositories;
 using hello.question.api.Extensions;
 using hello.question.api.Middleware;
+using hello.question.api.Services;
 
 namespace hello.question.api
 {
@@ -62,6 +63,12 @@ namespace hello.question.api
             services.AddScoped<IParticipantRepository, ParticipantRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<ISubQuestionRepository, SubQuestionRepository>();
+
+            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IQuestionAnswerService, QuestionAnswerService>();
+            services.AddScoped<IAnswerService, AnswerService>();
+            services.AddScoped<IParticipantService, ParticipantService>();
+            //services.AddScoped<IChoiseService, ChoiseService>();
 
 
             // services.AddScoped<NorthwindContext>();

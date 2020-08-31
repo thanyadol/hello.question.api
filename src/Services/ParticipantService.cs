@@ -27,7 +27,6 @@ namespace hello.question.api.Services
         //Task<Participant> UpdateAsync(Participant participant);
         //Task<Participant> DeleteAsync(string id);
 
-        Task<Participant> GetBySessionAsync(Guid sessionid);
 
         Task<Participant> GetAsync(Guid id);
 
@@ -65,23 +64,6 @@ namespace hello.question.api.Services
         public async Task<Participant> GetAsync(Guid id)
         {
             var entity = await _participantRepository.GetAsync(id);
-            return entity;
-        }
-
-        //
-        // Summary:
-        //     get session id for client
-        //
-        // Returns:
-        //      participant model
-        //
-        // Params:
-        //      session id
-        public async Task<Participant> GetBySessionAsync(Guid sessionid)
-        {
-            var participants = await _participantRepository.ListAsync();
-            var entity = participants.Where(c => c.SessionId == sessionid).FirstOrDefault();
-
             return entity;
         }
 
