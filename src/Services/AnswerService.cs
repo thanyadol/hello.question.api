@@ -43,10 +43,14 @@ namespace hello.question.api.Services
         protected readonly IAnswerRepository _answerRepository;
         protected readonly IQuestionAnswerService _questionService;
 
-        public AnswerService(IAnswerRepository answerRepository, IQuestionAnswerService questionService)
+        protected readonly IChoiseService _choiseService;
+
+
+        public AnswerService(IAnswerRepository answerRepository, IQuestionAnswerService questionService,  IChoiseService choiseService)
         {
             _answerRepository = answerRepository ?? throw new ArgumentNullException(nameof(answerRepository));
             _questionService = questionService ?? throw new ArgumentNullException(nameof(questionService));
+            _choiseService = choiseService ?? throw new ArgumentNullException(nameof(choiseService));
 
             //logg
             Log.Logger = new LoggerConfiguration()
@@ -125,6 +129,7 @@ namespace hello.question.api.Services
         {
             var answers = await _answerRepository.ListAsync();
             var questions = await _questionService.ListDetailAsync();
+            var choises = await _choiseService.ListSubChoiseAsync();
 
             List<AnswerParams> entities = new List<AnswerParams>();
             //persist all of answer for earch subquestion
@@ -141,6 +146,13 @@ namespace hello.question.api.Services
                     AnswerValue = a.Value,
                 };
 
+                //set value of choise
+                var ch = choises.Where(c => c.Id == a.Value).FirstOrDefault();
+                if(ch != null)
+                {
+                    p.AnswerText = ch.Title;
+                }
+
                 //set question and subquestion
                 var q = questions.Where(c => c.Id == a.SubQuestionId).FirstOrDefault();
                 if(q != null)
@@ -154,6 +166,7 @@ namespace hello.question.api.Services
                     p.SubQuestionType = q.Type;
                     p.SubQuestionOrder  = q.Order;
                 }
+
            
                 entities.Add(p);
             }

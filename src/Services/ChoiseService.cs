@@ -32,17 +32,20 @@ namespace hello.question.api.Services
         Task<IEnumerable<Choise>> ListAsync();
         Task<Choise> EnforceChoiseExistenceAsync(Guid id);
         Task<IEnumerable<Choise>> ListChoiseAsync();
+        Task<IEnumerable<SubChoise>> ListSubChoiseAsync();
     }
 
     public class ChoiseService : IChoiseService
     {
         //choise status
         protected readonly IChoiseRepository _choiseRepository;
+   protected readonly ISubChoiseRepository _subChoiseRepository;
 
 
-        public ChoiseService(IChoiseRepository choiseRepository)
+        public ChoiseService(IChoiseRepository choiseRepository, ISubChoiseRepository subChoiseRepository)
         {
             _choiseRepository = choiseRepository ?? throw new ArgumentNullException(nameof(choiseRepository));
+            _subChoiseRepository = subChoiseRepository ?? throw new ArgumentNullException(nameof(subChoiseRepository));
 
             //logg
             Log.Logger = new LoggerConfiguration()
@@ -72,6 +75,12 @@ namespace hello.question.api.Services
         {
             return await _choiseRepository.ListAsync();
         }
+
+        public async Task<IEnumerable<SubChoise>> ListSubChoiseAsync()
+        {
+            return await _subChoiseRepository.ListAsync();
+        }
+
 
 
         public async Task<IEnumerable<Choise>> ListChoiseAsync()

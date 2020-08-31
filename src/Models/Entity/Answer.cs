@@ -27,6 +27,8 @@ namespace hello.question.api.Models
         [StringLength(1000)]
         public string Text { get; set; }
 
+
+        [NotMapped]
         public Guid SessionId { get; set; }
 
 
