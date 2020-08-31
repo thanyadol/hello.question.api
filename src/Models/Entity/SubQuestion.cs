@@ -21,7 +21,7 @@ namespace hello.question.api.Models
 
 
         [StringLength(500)]
-        public string Questionnair { get; set; }
+        public string Value { get; set; }
 
         [StringLength(1000)]
         public string Description { get; set; }
@@ -45,6 +45,8 @@ namespace hello.question.api.Models
         public List<Choise> Choises { get; set; }
 
 
+        [NotMapped]
+        public string QuestionTitle { get; set; }
 
     }
 }

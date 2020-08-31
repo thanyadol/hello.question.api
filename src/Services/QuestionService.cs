@@ -163,4 +163,34 @@ namespace hello.question.api.Services
         }
     }
 
+
+     public interface IQuestionAnswerService
+    {
+        Task<IEnumerable<SubQuestion>> ListDetailAsync();
+    }
+
+    public class QuestionAnswerService : IQuestionAnswerService
+    {
+            //question status
+        protected readonly IQuestionRepository _questionRepository;
+        protected readonly ISubQuestionRepository _subQuestionRepository;
+
+        public QuestionAnswerService(IQuestionRepository questionRepository, ISubQuestionRepository subQuestionRepository)
+        {
+            _questionRepository = questionRepository ?? throw new ArgumentNullException(nameof(questionRepository));
+            _subQuestionRepository = subQuestionRepository ?? throw new ArgumentNullException(nameof(subQuestionRepository));
+
+    
+            //logg
+            Log.Logger = new LoggerConfiguration()
+                            .WriteTo.Console()
+                            .CreateLogger();
+        }
+
+        public async Task<IEnumerable<SubQuestion>> ListDetailAsync()
+        {
+            return await _questionRepository.ListSubQuestionAsync();
+        }
+
+    }
 }

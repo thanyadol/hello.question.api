@@ -56,11 +56,11 @@ namespace hello.question.api.Controllers
         [EnableCors("AllowCors")]
         [Route("list")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Answer>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IEnumerable<Answer>), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ListAsync()
+        [ProducesResponseType(typeof(IEnumerable<AnswerParams>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<AnswerParams>), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ListAnswerDetailAsync()
         {
-            var entities = await _answerService.ListAsync();
+            var entities = await _answerService.ListAnswerDetailAsync();
             return Ok(entities);
         }
 

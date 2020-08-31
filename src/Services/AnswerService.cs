@@ -34,23 +34,36 @@ namespace hello.question.api.Services
         Task<Answer> EnforceAnswerExistenceAsync(Guid id);
         Task<IEnumerable<Answer>> ListByParticipantAsync(Guid participantid);
         Task<IEnumerable<Answer>> BatchCreateAsync(AnswerParams param);
+        Task<IEnumerable<AnswerParams>> ListAnswerDetailAsync();
     }
 
     public class AnswerService : IAnswerService
     {
         //answer status
         protected readonly IAnswerRepository _answerRepository;
+        protected readonly IQuestionAnswerService _questionService;
 
-
-        public AnswerService(IAnswerRepository answerRepository)
+        public AnswerService(IAnswerRepository answerRepository, IQuestionAnswerService questionService)
         {
             _answerRepository = answerRepository ?? throw new ArgumentNullException(nameof(answerRepository));
+            _questionService = questionService ?? throw new ArgumentNullException(nameof(questionService));
 
             //logg
             Log.Logger = new LoggerConfiguration()
                             .WriteTo.Console()
                             .CreateLogger();
         }
+
+        //
+        // Summary:
+        //     create range of answer
+        //
+        // Returns:
+        //      list of created anwser model
+        //
+        // Params:
+        //     answer param gatway
+        //
 
         public async Task<IEnumerable<Answer>> BatchCreateAsync(AnswerParams param)
         {
@@ -99,6 +112,54 @@ namespace hello.question.api.Services
             return await _answerRepository.ListAsync();
         }
 
+
+        //
+        // Summary:
+        //     list answer and detailed question for csv
+        //
+        // Returns:
+        //      list of anwser params
+        //
+
+        public async Task<IEnumerable<AnswerParams>> ListAnswerDetailAsync()
+        {
+            var answers = await _answerRepository.ListAsync();
+            var questions = await _questionService.ListDetailAsync();
+
+            List<AnswerParams> entities = new List<AnswerParams>();
+            //persist all of answer for earch subquestion
+            foreach (var a in answers)
+            {
+                var p = new AnswerParams()
+                {
+                   //set some value
+                    ParticipantId = a.ParticipantId,
+                    AnswerDate = a.Date,
+                    AnswerId = a.Id,
+
+                    AnswerText = a.Text,
+                    AnswerValue = a.Value,
+                };
+
+                //set question and subquestion
+                var q = questions.Where(c => c.Id == a.SubQuestionId).FirstOrDefault();
+                if(q != null)
+                {
+                    p.SubQuestionId = q.Id;
+                    p.QuestionId = q.QuestionId;
+
+                    p.QuestionTitle = q.QuestionTitle;
+                    p.SubQuestionValue = q.Value;
+
+                    p.SubQuestionType = q.Type;
+                    p.SubQuestionOrder  = q.Order;
+                }
+           
+                entities.Add(p);
+            }
+
+            return entities;
+        }
 
         public async Task<IEnumerable<Answer>> ListByParticipantAsync(Guid participantid)
         {

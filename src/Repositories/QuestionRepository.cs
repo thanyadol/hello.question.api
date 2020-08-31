@@ -24,6 +24,7 @@ namespace hello.question.api.Repositories
         Task<Question> CreateAsync(Question question);
         Task<Question> UpdateAsync(Question question);
         //Task<Question> DeleteAsync(Guid id);
+        Task<IEnumerable<SubQuestion>> ListSubQuestionAsync();
 
     }
 
@@ -39,6 +40,31 @@ namespace hello.question.api.Repositories
             .WriteTo.Console()
             .CreateLogger();
 
+        }
+
+        public async Task<IEnumerable<SubQuestion>> ListSubQuestionAsync()
+        {
+            var entity = await (from p in _context.SubQuestions
+                                join c in _context.Questions on p.QuestionId equals c.Id
+                                select new SubQuestion()
+                                {
+                                    Id = p.Id,
+
+                                    QuestionId = c.Id,
+                                    Value = p.Value,
+
+                                    QuestionTitle = c.Title,
+
+                                    Type = p.Type,
+                                    Order = p.Order,
+
+                                    By = p.By,
+                                    Date = p.Date,
+
+
+                                }).ToListAsync();
+
+            return entity;
         }
 
         public async Task<Question> GetAsync(Guid id)
