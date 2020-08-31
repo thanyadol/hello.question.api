@@ -22,13 +22,13 @@ namespace hello.question.api.Repositories
         Task<IEnumerable<SubQuestion>> ListAsync();
 
 
-        Task<SubQuestion> GetAsync(string id);
+        Task<SubQuestion> GetAsync(Guid id);
         Task<SubQuestion> CreateAsync(SubQuestion subquestion);
         Task<SubQuestion> UpdateAsync(SubQuestion subquestion);
 
         Task<IEnumerable<SubQuestion>> CreateRangeAsync(IEnumerable<SubQuestion> subquestions);
 
-        //Task<SubQuestion> DeleteAsync(string id);
+        //Task<SubQuestion> DeleteAsync(Guid id);
     }
 
     public class SubQuestionRepository : ISubQuestionRepository
@@ -64,7 +64,7 @@ namespace hello.question.api.Repositories
             return entity.Entity;
         }
 
-        public async Task<SubQuestion> DeleteAsync(string id)
+        public async Task<SubQuestion> DeleteAsync(Guid id)
         {
             var entity = await _context.SubQuestions.FindAsync(id);
             _context.SubQuestions.Remove(entity);
@@ -89,7 +89,7 @@ namespace hello.question.api.Repositories
             return entity;
         }
 
-        public async Task<SubQuestion> GetAsync(string id)
+        public async Task<SubQuestion> GetAsync(Guid id)
         {
             var entity = await _context.SubQuestions.FindAsync(id);
             return entity;

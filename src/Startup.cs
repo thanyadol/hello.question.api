@@ -42,7 +42,7 @@ namespace hello.question.api
         {
             //in memory
             services.AddDbContext<NorthwindContext>(opt =>
-                opt.UseInMemoryDatabase("Northwind"));
+                                     opt.UseInMemoryDatabase("Northwind"));
 
             //add an APIs Service
             //services.AddHttpClient<IGoogleService, GoogleService>().SetHandlerLifetime(TimeSpan.FromMinutes(5));

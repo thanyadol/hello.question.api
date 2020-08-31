@@ -22,13 +22,13 @@ namespace hello.question.api.Repositories
         Task<IEnumerable<Choise>> ListAsync();
 
 
-        Task<Choise> GetAsync(string id);
+        Task<Choise> GetAsync(Guid id);
         Task<Choise> CreateAsync(Choise choise);
         Task<Choise> UpdateAsync(Choise choise);
 
         Task<IEnumerable<Choise>> CreateRangeAsync(IEnumerable<Choise> choises);
 
-        //Task<Choise> DeleteAsync(string id);
+        //Task<Choise> DeleteAsync(Guid id);
     }
 
     public class ChoiseRepository : IChoiseRepository
@@ -64,7 +64,7 @@ namespace hello.question.api.Repositories
             return entity.Entity;
         }
 
-        public async Task<Choise> DeleteAsync(string id)
+        public async Task<Choise> DeleteAsync(Guid id)
         {
             var entity = await _context.Choises.FindAsync(id);
             _context.Choises.Remove(entity);
@@ -89,7 +89,7 @@ namespace hello.question.api.Repositories
             return entity;
         }
 
-        public async Task<Choise> GetAsync(string id)
+        public async Task<Choise> GetAsync(Guid id)
         {
             var entity = await _context.Choises.FindAsync(id);
             return entity;

@@ -22,13 +22,13 @@ namespace hello.question.api.Repositories
         Task<IEnumerable<Participant>> ListAsync();
 
 
-        Task<Participant> GetAsync(string id);
+        Task<Participant> GetAsync(Guid id);
         Task<Participant> CreateAsync(Participant participant);
         Task<Participant> UpdateAsync(Participant participant);
 
         Task<IEnumerable<Participant>> CreateRangeAsync(IEnumerable<Participant> participants);
 
-        //Task<Participant> DeleteAsync(string id);
+        //Task<Participant> DeleteAsync(Guid id);
     }
 
     public class ParticipantRepository : IParticipantRepository
@@ -64,7 +64,7 @@ namespace hello.question.api.Repositories
             return entity.Entity;
         }
 
-        public async Task<Participant> DeleteAsync(string id)
+        public async Task<Participant> DeleteAsync(Guid id)
         {
             var entity = await _context.Participants.FindAsync(id);
             _context.Participants.Remove(entity);
@@ -89,7 +89,7 @@ namespace hello.question.api.Repositories
             return entity;
         }
 
-        public async Task<Participant> GetAsync(string id)
+        public async Task<Participant> GetAsync(Guid id)
         {
             var entity = await _context.Participants.FindAsync(id);
             return entity;
