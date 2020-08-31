@@ -19,6 +19,8 @@ using Swashbuckle.AspNetCore.Swagger;
 
 using AutoMapper;
 using hello.question.api.Repositories;
+using hello.question.api.Extensions;
+using hello.question.api.Middleware;
 
 namespace hello.question.api
 {
@@ -143,10 +145,10 @@ namespace hello.question.api
             //for dependency injection service
             app.ApplicationServices.GetService<IDisposable>();
 
-            //app.ConfigureCustomExceptionMiddleware();
+            app.ConfigureCustomExceptionMiddleware();
 
             //Add our new middleware to the pipeline
-            //app.UseMiddleware<LoggingMiddleware>();
+            app.UseMiddleware<LoggingMiddleware>();
 
 
             app.UseHttpsRedirection();
