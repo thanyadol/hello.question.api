@@ -10,8 +10,7 @@ namespace hello.question.api.Models.Gateway
     public class QuestionParams
     {
         public Guid Id { get; set; }
-
-
+        public Guid ParticipantId { get; set; }
         public string Title { get; set; }
 
         public string Description { get; set; }

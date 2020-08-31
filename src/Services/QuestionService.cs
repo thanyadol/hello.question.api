@@ -79,7 +79,7 @@ namespace hello.question.api.Services
         {
             //get participant session
             var participant = await _participantService.GetAsync(participantid.GetValueOrDefault());
-            if (participant == null)
+            if (participantid == null)
             {
                 //no history answer for participant
                 //throw new ParticipantNotFoundException();
