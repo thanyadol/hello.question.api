@@ -17,7 +17,7 @@ namespace hello.question.api.Models
 
 
         [ForeignKey("Choise")]
-        public Guid ChoiseId { get; set; }
+        public Guid? ChoiseId { get; set; }
 
 
         [StringLength(500)]

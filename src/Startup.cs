@@ -72,7 +72,7 @@ namespace hello.question.api
             services.AddScoped<IQuestionAnswerService, QuestionAnswerService>();
             services.AddScoped<IAnswerService, AnswerService>();
             services.AddScoped<IParticipantService, ParticipantService>();
-            //services.AddScoped<IChoiseService, ChoiseService>();
+            services.AddScoped<IChoiseService, ChoiseService>();
 
 
             // services.AddScoped<NorthwindContext>();

@@ -52,6 +52,10 @@ namespace hello.question.api.Services
 
         public async Task<Participant> CreateAsync(Participant participant)
         {
+            //auto assign
+            participant.Id = Guid.NewGuid();
+            participant.Date = DateTime.UtcNow; 
+
             var entity = await _participantRepository.CreateAsync(participant);
             if (entity == null)
             {

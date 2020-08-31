@@ -32,7 +32,7 @@ namespace hello.question.api.Services
 
         Task<IEnumerable<Question>> ListAsync();
         Task<Question> EnforceQuestionExistenceAsync(Guid id);
-        Task<QuestionParams> GetRemainByParticipantAsync(Guid participantid);
+        Task<QuestionParams> GetRemainByParticipantAsync(Guid? participantid);
     }
 
     public class QuestionService : IQuestionService
@@ -75,13 +75,22 @@ namespace hello.question.api.Services
         //      question model with list of mixed sub question and choise
         //
 
-        public async Task<QuestionParams> GetRemainByParticipantAsync(Guid participantid)
+        public async Task<QuestionParams> GetRemainByParticipantAsync(Guid? participantid)
         {
             //get participant session
-            var participant = await _participantService.GetAsync(participantid);
+            var participant = await _participantService.GetAsync(participantid.GetValueOrDefault());
             if (participant == null)
             {
-                throw new ParticipantNotFoundException();
+                //no history answer for participant
+                //throw new ParticipantNotFoundException();
+
+                var pp = new Participant()
+                {
+                    Name = "t5hany6adol",
+                    Email = "rockwalnut@gmail.com"              
+                };
+                
+                participant = await _participantService.CreateAsync(pp);
             }
 
             //prepaire data
@@ -90,7 +99,7 @@ namespace hello.question.api.Services
             var choises = await _choiseService.ListChoiseAsync();
 
             //get list of answer to compare with remain
-            var recentAnswers = await _answerService.ListByParticipantAsync(participantid);
+            var recentAnswers = await _answerService.ListByParticipantAsync(participant.Id);
             if (recentAnswers.Any())
             {
 
