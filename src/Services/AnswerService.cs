@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 //model
 using hello.question.api.Models;
+using hello.question.api.Models.Gateway;
 using hello.question.api.Repositories;
 
 //logg
@@ -32,6 +33,7 @@ namespace hello.question.api.Services
         Task<IEnumerable<Answer>> ListAsync();
         Task<Answer> EnforceAnswerExistenceAsync(Guid id);
         Task<IEnumerable<Answer>> ListByParticipantAsync(Guid participantid);
+        Task<IEnumerable<Answer>> BatchCreateAsync(AnswerParams param);
     }
 
     public class AnswerService : IAnswerService
@@ -47,20 +49,20 @@ namespace hello.question.api.Services
             //logg
             Log.Logger = new LoggerConfiguration()
                             .WriteTo.Console()
-                            .CreateLogger();s
+                            .CreateLogger();
         }
 
         public async Task<IEnumerable<Answer>> BatchCreateAsync(AnswerParams param)
         {
             List<Answer> entities = new List<Answer>();
             //persist all of answer for earch subquestion
-            foreach (var a in param.Answer)
+            foreach (var a in param.Answers)
             {
                 //set some value
                 a.Date = DateTime.UtcNow;
                 a.ParticipantId = param.ParticipantId;
 
-                a.By = param.ParticipantId;
+               // a.By = param.ParticipantId;
                 
                 entities.Add(a);
             }
@@ -102,7 +104,7 @@ namespace hello.question.api.Services
         {
             var entities = await _answerRepository.ListAsync();
 
-            return entities.Where(c => c.participantid == participantid);
+            return entities.Where(c => c.ParticipantId == participantid);
         }
 
 

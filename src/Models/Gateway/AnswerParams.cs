@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hello.question.api.Models
 {
-    public class Answer
+    public class AnswerParams
     {
         public Guid Id { get; set; }
 

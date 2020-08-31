@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using hello.Answer.api.Services;
-using hello.Answer.api.Models;
-using hello.Answer.api.Models.Gateway;
+using hello.question.api.Services;
+using hello.question.api.Models;
+using hello.question.api.Models.Gateway;
 
-namespace hello.Answer.api.Controllers
+namespace hello.question.api.Controllers
 {
     //[Authorize]
     //[ServiceFilter(typeof(EnsureUserAuthorizeInAsync))]
@@ -21,8 +21,8 @@ namespace hello.Answer.api.Controllers
     [ApiController]
     public class AnswerController : ControllerBase
     {
-        private readonly IanswerService _answerService;
-        public AnswerController(IanswerService answerService)
+        private readonly IAnswerService _answerService;
+        public AnswerController(IAnswerService answerService)
         {
             _answerService = answerService ?? throw new ArgumentNullException(nameof(answerService));
         }
