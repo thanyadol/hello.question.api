@@ -122,6 +122,8 @@ namespace hello.question.api.Services
                 Id = pickedQuestion.Id,
                 Title = pickedQuestion.Title,
 
+                ParticipantId = participant.Id,
+
                 Order = pickedQuestion.Order,
 
                 SubQuestions = selectSubQuestions,

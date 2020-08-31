@@ -48,11 +48,13 @@ namespace hello.question.api.Controllers
 
         //
         // Summary:
-        //      return basic list of Answer
+        //      return basic list of Answer with csv custom formatter
         //
         // Returns:
         //     list of Answer
         //
+
+        [Produces("text/csv")]
         [EnableCors("AllowCors")]
         [Route("list")]
         [HttpGet]

@@ -22,6 +22,7 @@ using hello.question.api.Repositories;
 using hello.question.api.Extensions;
 using hello.question.api.Middleware;
 using hello.question.api.Services;
+using hello.question.api.Formatter;
 
 namespace hello.question.api
 {
@@ -123,7 +124,9 @@ namespace hello.question.api
             //services.AddScoped<EnsureUserAuthorizeInAsync>();
 
             // ...
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(options => {
+                 options.OutputFormatters.Insert(0, new CsvMediaTypeFormatter());
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
